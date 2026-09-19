@@ -1,0 +1,82 @@
+---
+/**
+ * Pricing — tabela cennikowa podzielona na kategorie.
+ */
+
+const categories = [
+  {
+    title: "Zabiegi na twarz",
+    items: [
+      { name: "Oczyszczanie manualne", price: "150 zł", duration: "60 min" },
+      { name: "Peeling kawitacyjny", price: "120 zł", duration: "45 min" },
+      { name: "Mezoterapia igłowa", price: "350 zł", duration: "60 min" },
+      { name: "Lifting HIFU", price: "800 zł", duration: "90 min" },
+    ],
+  },
+  {
+    title: "Manicure & Pedicure",
+    items: [
+      { name: "Manicure klasyczny", price: "60 zł", duration: "30 min" },
+      { name: "Manicure hybrydowy", price: "100 zł", duration: "45 min" },
+      { name: "Pedicure kosmetyczny", price: "120 zł", duration: "60 min" },
+      { name: "Pedicure hybrydowy", price: "140 zł", duration: "60 min" },
+    ],
+  },
+  {
+    title: "Masaże & Ciało",
+    items: [
+      { name: "Masaż relaksacyjny", price: "180 zł", duration: "60 min" },
+      { name: "Masaż gorącymi kamieniami", price: "220 zł", duration: "75 min" },
+      { name: "Depilacja laserowa — nogi", price: "400 zł", duration: "45 min" },
+      { name: "Peeling ciała + nawilżanie", price: "200 zł", duration: "60 min" },
+    ],
+  },
+];
+---
+
+<section id="cennik" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-brand-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+        Cennik
+      </p>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        Przejrzyste ceny
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+        Bez ukrytych kosztów. Cena zawsze zawiera konsultację i dobór zabiegu.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {
+        categories.map((cat) => (
+          <div class="border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div class="bg-brand-50 px-6 py-4">
+              <h3 class="font-display text-lg font-semibold text-gray-900">
+                {cat.title}
+              </h3>
+            </div>
+            <div class="divide-y divide-gray-50">
+              {cat.items.map((item) => (
+                <div class="px-6 py-4 flex items-center justify-between gap-4">
+                  <div>
+                    <div class="text-sm font-medium text-gray-800">
+                      {item.name}
+                    </div>
+                    <div class="text-xs text-gray-400 mt-0.5">
+                      ⏱ {item.duration}
+                    </div>
+                  </div>
+                  <div class="text-sm font-bold text-brand-600 whitespace-nowrap">
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
