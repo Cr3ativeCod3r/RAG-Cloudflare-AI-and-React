@@ -44,18 +44,16 @@ ZASADY:
 - Podawaj ceny i czasy trwania zabiegów, jeśli są dostępne w kontekście.
 - Formatuj wypowiedzi czytelnie. Jeśli wymieniasz kilka zabiegów, używaj punktatorów i ZAWSZE stawiaj je od nowej linii. Używaj **pogrubień** do nazw zabiegów.
 - Nie wymyślaj informacji, których nie ma w kontekście.
-- ABSOLUTNIE ZAKAZANE JEST PISANIE PROCESU MYŚLOWEGO (np. "Analyze the request", "Drafting"). Zwracaj OD RAZU tylko i wyłącznie gotową odpowiedź dla klienta.
 
 KONTEKST Z BAZY WIEDZY:
 ${context || "Brak danych w bazie wiedzy."}`;
 
-  // Używamy glm-4.7-flash, ze strumieniowaniem (stream: true)
-  const stream = await env.AI.run("@cf/zai-org/glm-4.7-flash", {
+  const stream = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fp8", {
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: question },
     ],
-    max_tokens: 512,
+    max_tokens: 1024,
     temperature: 0.3,
     stream: true,
   });
