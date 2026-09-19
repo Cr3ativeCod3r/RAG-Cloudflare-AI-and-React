@@ -1,7 +1,7 @@
 // src/handlers/seed.js
 
 /**
- * POST /seed — Jednorazowe zasilenie bazy wektorowej fragmentami z zabiegi.docx
+ * POST /seed - One-time seeding of the vector database with chunks from zabiegi.docx
  * Body: { "chunks": [{ "id": "chunk-0", "text": "..." }, ...] }
  * Response: { "success": true, "inserted": N }
  */
@@ -15,7 +15,7 @@ export async function handleSeed(request, env, corsHeaders) {
     );
   }
 
-  const batchSize = parseInt(env.SEED_BATCH_SIZE || "50"); // Mniejsze partie, żeby nie przekroczyć limitów API
+  const batchSize = parseInt(env.SEED_BATCH_SIZE || "50"); // Smaller batches to avoid exceeding API limits
   const embeddingModel = env.EMBEDDING_MODEL || "@cf/baai/bge-base-en-v1.5";
   let totalInserted = 0;
 
@@ -24,22 +24,22 @@ export async function handleSeed(request, env, corsHeaders) {
     const texts = batch.map((c) => c.text);
 
     console.log(
-      `📊 Przetwarzam partię ${Math.floor(i / batchSize) + 1}/${Math.ceil(chunks.length / batchSize)} (${texts.length} fragmentów)`
+      `📊 Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(chunks.length / batchSize)} (${texts.length} chunks)`
     );
 
-    // Generuj embeddingi dla partii
+    // Generate embeddings for the batch
     const embeddingResponse = await env.AI.run(embeddingModel, {
       text: texts,
     });
 
-    // Przygotuj wektory do wstawienia
+    // Prepare vectors for insertion
     const vectors = batch.map((chunk, idx) => ({
       id: chunk.id,
       values: embeddingResponse.data[idx],
       metadata: { text: chunk.text },
     }));
 
-    // Wstaw do Vectorize
+    // Insert into Vectorize
     await env.VECTORIZE.upsert(vectors);
     totalInserted += vectors.length;
   }

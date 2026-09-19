@@ -1,5 +1,5 @@
 // scripts/parse-docx.mjs
-// Jednorazowy skrypt do wyciągnięcia tekstu z zabiegi.docx i podziału na fragmenty (chunks)
+// One-time script to extract text from zabiegi.docx and split it into chunks
 import mammoth from "mammoth";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { resolve, dirname } from "path";
@@ -12,21 +12,21 @@ const docxPath = resolve(projectRoot, "zabiegi.docx");
 const outputDir = resolve(projectRoot, "data");
 const outputPath = resolve(outputDir, "zabiegi-chunks.json");
 
-// Upewnij się, że folder data istnieje
+// Ensure the data folder exists
 if (!existsSync(outputDir)) {
   mkdirSync(outputDir, { recursive: true });
 }
 
-console.log(`📄 Czytam: ${docxPath}`);
+console.log(`📄 Reading: ${docxPath}`);
 const result = await mammoth.extractRawText({ path: docxPath });
 const text = result.value;
 
-console.log(`📝 Wyodrębniony tekst: ${text.length} znaków`);
+console.log(`📝 Extracted text: ${text.length} characters`);
 
-// Dzielimy tekst na fragmenty ~300 znaków z nakładaniem 50 znaków
+// Split text into chunks of ~300 characters with 50 characters overlap
 function chunkText(text, chunkSize = 300, overlap = 50) {
   const chunks = [];
-  // Najpierw spróbuj podzielić po akapitach
+  // Try to split by paragraphs first
   const paragraphs = text.split(/\n\n+/).filter((p) => p.trim().length > 10);
 
   let currentChunk = "";
@@ -37,14 +37,14 @@ function chunkText(text, chunkSize = 300, overlap = 50) {
         id: `chunk-${chunks.length}`,
         text: currentChunk.trim(),
       });
-      // Overlap: zachowaj ostatnie 50 znaków
+      // Overlap: keep the last 50 characters
       currentChunk = currentChunk.slice(-overlap) + "\n" + paragraph;
     } else {
       currentChunk += (currentChunk ? "\n" : "") + paragraph;
     }
   }
 
-  // Ostatni fragment
+  // Last chunk
   if (currentChunk.trim().length > 20) {
     chunks.push({
       id: `chunk-${chunks.length}`,
@@ -52,7 +52,7 @@ function chunkText(text, chunkSize = 300, overlap = 50) {
     });
   }
 
-  // Jeśli akapity nie zadziałały, fallback na podział po znakach
+  // If paragraphs didn't work, fallback to character splitting
   if (chunks.length === 0) {
     let start = 0;
     while (start < text.length) {
@@ -75,10 +75,10 @@ const chunks = chunkText(text);
 
 writeFileSync(outputPath, JSON.stringify(chunks, null, 2), "utf-8");
 
-console.log(`\n✅ Wyodrębniono ${chunks.length} fragmentów z zabiegi.docx`);
-console.log(`📁 Zapisano do: ${outputPath}`);
-console.log(`\nPierwsze 3 fragmenty (podgląd):`);
+console.log(`\n✅ Extracted ${chunks.length} chunks from zabiegi.docx`);
+console.log(`📁 Saved to: ${outputPath}`);
+console.log(`\nFirst 3 chunks (preview):`);
 chunks.slice(0, 3).forEach((c, i) => {
-  console.log(`\n--- Fragment ${i} (${c.text.length} znaków) ---`);
+  console.log(`\n--- Chunk ${i} (${c.text.length} characters) ---`);
   console.log(c.text.substring(0, 150) + (c.text.length > 150 ? "..." : ""));
 });

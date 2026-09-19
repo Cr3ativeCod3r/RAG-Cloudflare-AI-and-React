@@ -1,5 +1,5 @@
 // worker/src/index.js
-// Cloudflare Worker — API chatbota RAG dla Astra Beauty Salon
+// Cloudflare Worker - RAG chatbot API for Astra Beauty Salon
 
 import { handleChat } from "./handlers/chat.js";
 import { handleSeed } from "./handlers/seed.js";

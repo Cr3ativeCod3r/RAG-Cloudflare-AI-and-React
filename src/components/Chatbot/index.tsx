@@ -78,7 +78,7 @@ export default function Chatbot() {
                   });
                 }
               } catch (e) {
-                // ignoruj błędy parsowania
+                // ignore parsing errors
               }
             }
           }

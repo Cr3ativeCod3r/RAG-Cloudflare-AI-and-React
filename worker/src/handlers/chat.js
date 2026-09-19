@@ -1,7 +1,7 @@
 // src/handlers/chat.js
 
 /**
- * POST /chat — Główny endpoint RAG chatbota
+ * POST /chat - Main RAG chatbot endpoint
  * Body: { "question": "..." }
  * Response: Server-Sent Events (SSE) stream
  */
@@ -15,32 +15,32 @@ export async function handleChat(request, env, corsHeaders) {
     );
   }
 
-  // Zmienne środowiskowe z fallbackiem do wartości domyślnych
+  // Environment variables with fallback to default values
   const embeddingModel = env.EMBEDDING_MODEL || "@cf/baai/bge-base-en-v1.5";
   const chatModel = env.CHAT_MODEL || "@cf/meta/llama-3.1-8b-instruct-fp8";
   const topK = parseInt(env.RAG_TOP_K || "3");
   const maxTokens = parseInt(env.CHAT_MAX_TOKENS || "1024");
   const temperature = parseFloat(env.CHAT_TEMPERATURE || "0.3");
 
-  // 1. Wygeneruj embedding pytania użytkownika
+  // 1. Generate an embedding for the user's question
   const embeddingResponse = await env.AI.run(embeddingModel, {
     text: [question],
   });
   const queryVector = embeddingResponse.data[0];
 
-  // 2. Wyszukaj najbardziej podobne fragmenty w Vectorize
+  // 2. Search for the most similar chunks in Vectorize
   const searchResults = await env.VECTORIZE.query(queryVector, {
-    topK: topK, // Zmienna z env
+    topK: topK, // Variable from env
     returnMetadata: "all",
   });
 
-  // 3. Zbuduj kontekst z wyników
+  // 3. Build context from the results
   const context = searchResults.matches
     .map((match) => match.metadata?.text || "")
     .filter(Boolean)
     .join("\n\n---\n\n");
 
-  // 4. Wygeneruj odpowiedź LLM z kontekstem RAG
+  // 4. Generate LLM response with RAG context
   const systemPrompt = `Jesteś miłą i profesjonalną asystentką salonu kosmetycznego "Astra Beauty".
 
 ZASADY:
