@@ -49,9 +49,8 @@ ZASADY:
 KONTEKST Z BAZY WIEDZY:
 ${context || "Brak danych w bazie wiedzy."}`;
 
-  // Llama 3.1 8B Instruct jest niezwykle szybka, a stream: true pozwala
-  // na natychmiastowe wyświetlanie słów (Time To First Token to ułamek sekundy)
-  const stream = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+  // Używamy glm-4.7-flash, ze strumieniowaniem (stream: true)
+  const stream = await env.AI.run("@cf/zai-org/glm-4.7-flash", {
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: question },
