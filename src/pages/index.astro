@@ -1,0 +1,41 @@
+---
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import About from "../components/About.astro";
+import Gallery from "../components/Gallery.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Pricing from "../components/Pricing.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!doctype html>
+<html lang="pl" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astra Beauty — Salon Kosmetyczny</title>
+    <meta
+      name="description"
+      content="Astra Beauty — profesjonalny salon kosmetyczny. Zabiegi na twarz i ciało, manicure, pedicure, masaże. Zarezerwuj wizytę online."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans text-gray-800 bg-white antialiased">
+    <Navbar />
+    <Hero />
+    <Services />
+    <About />
+    <Gallery />
+    <Testimonials />
+    <Pricing />
+    <Contact />
+    <Footer />
+  </body>
+</html>
