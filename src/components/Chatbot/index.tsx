@@ -57,8 +57,19 @@ export default function Chatbot() {
             if (line.startsWith("data: ") && line !== "data: [DONE]") {
               try {
                 const data = JSON.parse(line.slice(6));
+                
+                let token = "";
                 if (data.response) {
-                  fullAssistantMessage += data.response;
+                  token = data.response;
+                } else if (data.choices && data.choices.length > 0 && data.choices[0].delta) {
+                  // Ignore reasoning_content, only take final content
+                  if (data.choices[0].delta.content) {
+                    token = data.choices[0].delta.content;
+                  }
+                }
+
+                if (token) {
+                  fullAssistantMessage += token;
                   
                   setMessages((prev) => {
                     const newMessages = [...prev];
@@ -67,7 +78,7 @@ export default function Chatbot() {
                   });
                 }
               } catch (e) {
-                // ignoruj
+                // ignoruj błędy parsowania
               }
             }
           }
