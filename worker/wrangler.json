@@ -1,0 +1,14 @@
+{
+  "name": "astra-chat-api",
+  "main": "src/index.js",
+  "compatibility_date": "2025-01-01",
+  "ai": {
+    "binding": "AI"
+  },
+  "vectorize": [
+    {
+      "binding": "VECTORIZE",
+      "index_name": "astra-zabiegi"
+    }
+  ]
+}

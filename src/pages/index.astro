@@ -8,6 +8,7 @@ import Testimonials from "../components/Testimonials.astro";
 import Pricing from "../components/Pricing.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
+import Chatbot from "../components/Chatbot";
 ---
 
 <!doctype html>
@@ -37,5 +38,6 @@ import Footer from "../components/Footer.astro";
     <Pricing />
     <Contact />
     <Footer />
+    <Chatbot client:only="react" />
   </body>
 </html>

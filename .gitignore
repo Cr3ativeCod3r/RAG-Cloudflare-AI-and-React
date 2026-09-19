@@ -4,3 +4,5 @@ dist/
 .env
 .env.local
 .wrangler/
+worker/node_modules/
+~$*.docx
