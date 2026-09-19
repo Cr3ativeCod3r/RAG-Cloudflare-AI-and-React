@@ -3,7 +3,7 @@ import { ToggleButton } from "./ToggleButton";
 import { ChatWindow } from "./ChatWindow";
 import type { Message } from "./types";
 
-const WORKER_URL = "https://astra-chat-api.banaszekk123.workers.dev";
+const WORKER_URL = import.meta.env.PUBLIC_WORKER_URL || "https://astra-chat-api.banaszekk123.workers.dev";
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);

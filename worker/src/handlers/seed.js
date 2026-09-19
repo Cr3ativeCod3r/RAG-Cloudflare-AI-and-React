@@ -15,7 +15,8 @@ export async function handleSeed(request, env, corsHeaders) {
     );
   }
 
-  const batchSize = 50; // Mniejsze partie, żeby nie przekroczyć limitów API
+  const batchSize = parseInt(env.SEED_BATCH_SIZE || "50"); // Mniejsze partie, żeby nie przekroczyć limitów API
+  const embeddingModel = env.EMBEDDING_MODEL || "@cf/baai/bge-base-en-v1.5";
   let totalInserted = 0;
 
   for (let i = 0; i < chunks.length; i += batchSize) {
@@ -27,7 +28,7 @@ export async function handleSeed(request, env, corsHeaders) {
     );
 
     // Generuj embeddingi dla partii
-    const embeddingResponse = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+    const embeddingResponse = await env.AI.run(embeddingModel, {
       text: texts,
     });
 

@@ -15,15 +15,22 @@ export async function handleChat(request, env, corsHeaders) {
     );
   }
 
+  // Zmienne środowiskowe z fallbackiem do wartości domyślnych
+  const embeddingModel = env.EMBEDDING_MODEL || "@cf/baai/bge-base-en-v1.5";
+  const chatModel = env.CHAT_MODEL || "@cf/meta/llama-3.1-8b-instruct-fp8";
+  const topK = parseInt(env.RAG_TOP_K || "3");
+  const maxTokens = parseInt(env.CHAT_MAX_TOKENS || "1024");
+  const temperature = parseFloat(env.CHAT_TEMPERATURE || "0.3");
+
   // 1. Wygeneruj embedding pytania użytkownika
-  const embeddingResponse = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+  const embeddingResponse = await env.AI.run(embeddingModel, {
     text: [question],
   });
   const queryVector = embeddingResponse.data[0];
 
   // 2. Wyszukaj najbardziej podobne fragmenty w Vectorize
   const searchResults = await env.VECTORIZE.query(queryVector, {
-    topK: 3, // Mniej chunków = szybsze przetwarzanie przez LLM
+    topK: topK, // Zmienna z env
     returnMetadata: "all",
   });
 
@@ -48,13 +55,13 @@ ZASADY:
 KONTEKST Z BAZY WIEDZY:
 ${context || "Brak danych w bazie wiedzy."}`;
 
-  const stream = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fp8", {
+  const stream = await env.AI.run(chatModel, {
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: question },
     ],
-    max_tokens: 1024,
-    temperature: 0.3,
+    max_tokens: maxTokens,
+    temperature: temperature,
     stream: true,
   });
 
