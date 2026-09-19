@@ -1,0 +1,72 @@
+---
+/**
+ * Services — siatka 6 usług salonu z ikonami emoji.
+ */
+
+const services = [
+  {
+    icon: "💆‍♀️",
+    title: "Zabiegi na twarz",
+    description: "Oczyszczanie, nawilżanie, liftingi i peelingi. Dobieramy zabiegi indywidualnie do potrzeb Twojej skóry.",
+  },
+  {
+    icon: "💅",
+    title: "Manicure & Pedicure",
+    description: "Manicure hybrydowy, japoński, klasyczny. Pedicure leczniczy i kosmetyczny z pielęgnacją stóp.",
+  },
+  {
+    icon: "🧖‍♀️",
+    title: "Masaże",
+    description: "Masaż relaksacyjny, gorącymi kamieniami, bambusowy. Chwila odprężenia w luksusowym otoczeniu.",
+  },
+  {
+    icon: "✨",
+    title: "Depilacja laserowa",
+    description: "Trwałe usuwanie owłosienia najnowszą technologią. Bezbolesne, skuteczne i bezpieczne zabiegi.",
+  },
+  {
+    icon: "👁️",
+    title: "Stylizacja brwi i rzęs",
+    description: "Laminacja, henna pudrowa, przedłużanie rzęs. Podkreśl swoje spojrzenie u naszych specjalistek.",
+  },
+  {
+    icon: "🌿",
+    title: "Zabiegi na ciało",
+    description: "Modelowanie sylwetki, zabiegi antycellulitowe, peelingi ciała. Kompleksowa pielęgnacja od stóp do głów.",
+  },
+];
+---
+
+<section id="uslugi" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <p class="text-brand-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+        Nasza oferta
+      </p>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        Usługi
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+        Szeroki wybór zabiegów kosmetycznych wykonywanych przez doświadczone specjalistki.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        services.map((service) => (
+          <div class="group p-8 rounded-2xl border border-gray-100 hover:border-brand-200 hover:shadow-lg hover:shadow-brand-100/50 transition-all duration-300">
+            <span class="text-4xl mb-5 block">{service.icon}</span>
+            <h3 class="font-display text-xl font-semibold text-gray-900 mb-3 group-hover:text-brand-700 transition-colors">
+              {service.title}
+            </h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              {service.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

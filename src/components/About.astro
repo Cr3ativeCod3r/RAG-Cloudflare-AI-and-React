@@ -1,0 +1,69 @@
+---
+/**
+ * About — sekcja "O nas" z wartościami salonu.
+ */
+
+const values = [
+  { number: "8+", label: "Lat doświadczenia" },
+  { number: "500+", label: "Zadowolonych klientek" },
+  { number: "15+", label: "Rodzajów zabiegów" },
+  { number: "5", label: "Specjalistek w zespole" },
+];
+---
+
+<section id="o-nas" class="py-24 bg-brand-50/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <!-- Text -->
+      <div>
+        <p class="text-brand-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+          O nas
+        </p>
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          Tworzymy przestrzeń<br />
+          <span class="text-brand-600 italic">dla Twojego piękna</span>
+        </h2>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6">
+          Astra Beauty to miejsce, w którym profesjonalizm spotyka się z pasją.
+          Nasz zespół doświadczonych kosmetologów i stylistek dba o każdy detal,
+          abyś wyszła od nas z uśmiechem i pewnością siebie.
+        </p>
+        <p class="text-gray-600 text-lg leading-relaxed mb-8">
+          Korzystamy wyłącznie z certyfikowanych kosmetyków najwyższej jakości
+          i regularnie szkolimy się z najnowszych technik, aby oferować Ci
+          zabiegi na światowym poziomie.
+        </p>
+        <a
+          href="#kontakt"
+          class="inline-flex items-center gap-2 text-brand-600 font-semibold hover:text-brand-700 transition-colors"
+        >
+          Poznaj nasz zespół
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Image placeholder + stats -->
+      <div>
+        <div class="bg-gradient-to-br from-brand-200 to-brand-100 rounded-3xl aspect-[4/3] mb-8 flex items-center justify-center">
+          <span class="text-6xl">🏛️</span>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {
+            values.map((stat) => (
+              <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                <div class="font-display text-2xl font-bold text-brand-600">
+                  {stat.number}
+                </div>
+                <div class="text-xs text-gray-500 mt-1">{stat.label}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
