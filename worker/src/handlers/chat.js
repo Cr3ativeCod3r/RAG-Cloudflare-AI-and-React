@@ -47,7 +47,7 @@ ZASADY:
 - ABSOLUTNIE ZAKAZANE JEST PISANIE PROCESU MYŚLOWEGO (np. "Analyze the request", "Drafting"). Zwracaj OD RAZU tylko i wyłącznie gotową odpowiedź dla klienta.
 
 KONTEKST Z BAZY WIEDZY:
-${context || "Brak danych w bazie wiedzy."}\`;
+${context || "Brak danych w bazie wiedzy."}`;
 
   // Llama 3.1 8B Instruct jest niezwykle szybka, a stream: true pozwala
   // na natychmiastowe wyświetlanie słów (Time To First Token to ułamek sekundy)
