@@ -1,0 +1,52 @@
+---
+/**
+ * Gallery — siatka 6 placeholderów na zdjęcia z efektami.
+ */
+
+const images = [
+  { emoji: "💆‍♀️", label: "Zabieg na twarz" },
+  { emoji: "💅", label: "Manicure hybrydowy" },
+  { emoji: "🧖‍♀️", label: "Strefa relaksu" },
+  { emoji: "✨", label: "Efekty zabiegów" },
+  { emoji: "🌸", label: "Wnętrze salonu" },
+  { emoji: "👁️", label: "Stylizacja rzęs" },
+];
+---
+
+<section id="galeria" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-brand-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+        Nasze realizacje
+      </p>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        Galeria
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+        Zobacz efekty naszej pracy i klimat panujący w salonie.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {
+        images.map((img, i) => (
+          <div
+            class:list={[
+              "group relative overflow-hidden rounded-2xl cursor-pointer",
+              i === 0 ? "md:row-span-2 aspect-[3/4] md:aspect-auto" : "aspect-square",
+            ]}
+          >
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-200 to-brand-100 flex items-center justify-center">
+              <span class="text-5xl group-hover:scale-110 transition-transform duration-300">
+                {img.emoji}
+              </span>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <p class="text-white text-sm font-medium p-4">{img.label}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

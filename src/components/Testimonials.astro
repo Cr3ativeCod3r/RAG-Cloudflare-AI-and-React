@@ -1,0 +1,73 @@
+---
+/**
+ * Testimonials — opinie klientek w karuzeli / siatce.
+ */
+
+const testimonials = [
+  {
+    name: "Katarzyna M.",
+    role: "Stała klientka od 3 lat",
+    text: "Astra Beauty to moje miejsce na ziemi! Każda wizyta to czysta przyjemność — profesjonalizm, miła atmosfera i fantastyczne efekty zabiegów.",
+    rating: 5,
+  },
+  {
+    name: "Anna W.",
+    role: "Klientka",
+    text: "Najlepszy manicure hybrydowy w mieście! Trzyma się idealnie przez 3 tygodnie. Dziewczyny z zespołu zawsze doradzą najlepszy kolor i kształt.",
+    rating: 5,
+  },
+  {
+    name: "Magdalena K.",
+    role: "Stała klientka od 5 lat",
+    text: "Po zabiegu liftingującym na twarz wyglądałam o 10 lat młodziej! Kosmetolożki w Astrze to prawdziwe artystki. Polecam z całego serca.",
+    rating: 5,
+  },
+];
+---
+
+<section id="opinie" class="py-24 bg-brand-50/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-brand-500 text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+        Opinie klientek
+      </p>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        Co mówią o nas
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+        Zaufanie naszych klientek to nasza największa nagroda.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        testimonials.map((t) => (
+          <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
+            <!-- Stars -->
+            <div class="text-gold-400 text-lg mb-4">
+              {"★".repeat(t.rating)}
+            </div>
+
+            <!-- Quote -->
+            <blockquote class="text-gray-600 text-sm leading-relaxed flex-1 mb-6">
+              "{t.text}"
+            </blockquote>
+
+            <!-- Author -->
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                <span class="text-brand-600 font-semibold text-sm">
+                  {t.name.charAt(0)}
+                </span>
+              </div>
+              <div>
+                <div class="font-semibold text-sm text-gray-900">{t.name}</div>
+                <div class="text-xs text-gray-400">{t.role}</div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
