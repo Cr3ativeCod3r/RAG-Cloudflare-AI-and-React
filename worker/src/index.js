@@ -3,10 +3,12 @@
 
 import { handleChat } from "./handlers/chat.js";
 import { handleSeed } from "./handlers/seed.js";
-import { corsHeaders } from "./utils/cors.js";
+import { getCorsHeaders } from "./utils/cors.js";
 
 export default {
   async fetch(request, env) {
+    const corsHeaders = getCorsHeaders(request, env);
+
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
     }

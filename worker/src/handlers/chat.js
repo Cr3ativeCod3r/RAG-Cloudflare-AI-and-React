@@ -18,7 +18,7 @@ export async function handleChat(request, env, corsHeaders) {
   // Environment variables with fallback to default values
   const embeddingModel = env.EMBEDDING_MODEL || "@cf/baai/bge-base-en-v1.5";
   const chatModel = env.CHAT_MODEL || "@cf/meta/llama-3.1-8b-instruct-fp8";
-  const topK = parseInt(env.RAG_TOP_K || "3");
+  const topK = parseInt(env.RAG_TOP_K || "8");
   const maxTokens = parseInt(env.CHAT_MAX_TOKENS || "1024");
   const temperature = parseFloat(env.CHAT_TEMPERATURE || "0.1");
 
@@ -49,7 +49,11 @@ BEZWZGLĘDNE ZASADY (NIGDY ich nie łam):
 2. NIGDY nie wymyślaj, nie zgaduj, nie dopowiadaj informacji, których NIE MA w KONTEKŚCIE. Nawet jeśli "wydaje Ci się" że coś wiesz — jeśli tego nie ma w KONTEKŚCIE, to tego NIE WIESZ.
 3. Jeśli pytanie dotyczy czegoś, czego NIE MA w KONTEKŚCIE (np. pracownicy, lokalizacja, godziny otwarcia, zabiegi niewymienione w kontekście), odpowiedz DOKŁADNIE: "Nie mam informacji na ten temat. Zapraszam do kontaktu telefonicznego pod numerem +48 123 456 789 lub na naszego Instagrama — chętnie odpowiemy na wszystkie pytania! 😊"
 4. Jeśli pytanie jest niezwiązane z salonem kosmetycznym lub nieodpowiednie, odpowiedz: "Jestem asystentką salonu Astra Beauty i mogę pomóc wyłącznie w kwestiach dotyczących naszych zabiegów i usług. 😊"
-5. Formatowanie: używaj punktatorów od nowej linii i **pogrubień** dla nazw zabiegów. Podawaj ceny i czasy TYLKO jeśli są w KONTEKŚCIE.
+
+ZASADY FORMATOWANIA:
+- Domyślnie wymieniaj zabiegi ZWIĘŹLE: tylko **nazwa**, cena i czas trwania. NIE dodawaj opisów zabiegów, chyba że klient wyraźnie pyta o szczegóły konkretnego zabiegu.
+- Używaj punktatorów od nowej linii i **pogrubień** dla nazw zabiegów.
+- Wymieniaj WSZYSTKIE pasujące zabiegi z kontekstu, nie skracaj listy.
 
 KONTEKST:
 ${context || "Brak danych."}`;
