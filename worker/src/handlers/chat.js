@@ -22,9 +22,19 @@ export async function handleChat(request, env, corsHeaders) {
   const maxTokens = parseInt(env.CHAT_MAX_TOKENS || "1024");
   const temperature = parseFloat(env.CHAT_TEMPERATURE || "0.1");
 
+  // Expand query with synonyms to help the English embedding model with Polish terms
+  let searchQuery = question;
+  const lowerQ = question.toLowerCase();
+  if (lowerQ.includes("krost") || lowerQ.includes("pryszcz") || lowerQ.includes("wągr")) {
+    searchQuery += " trądzik zaskórniki oczyszczanie twarzy";
+  }
+  if (lowerQ.includes("zmarszcz") || lowerQ.includes("starzen")) {
+    searchQuery += " odmładzanie lifting anti-aging";
+  }
+
   // 1. Generate an embedding for the user's question
   const embeddingResponse = await env.AI.run(embeddingModel, {
-    text: [question],
+    text: [searchQuery],
   });
   const queryVector = embeddingResponse.data[0];
 
@@ -45,10 +55,12 @@ export async function handleChat(request, env, corsHeaders) {
 
 BEZWZGLĘDNE ZASADY (NIGDY ich nie łam):
 
-1. JEDYNE ŹRÓDŁO PRAWDY to KONTEKST poniżej. Każda informacja w Twojej odpowiedzi (nazwa zabiegu, cena, czas, opis, pracownik, adres) MUSI być dosłownie zapisana w KONTEKŚCIE.
-2. NIGDY nie wymyślaj, nie zgaduj, nie dopowiadaj informacji, których NIE MA w KONTEKŚCIE. Nawet jeśli "wydaje Ci się" że coś wiesz — jeśli tego nie ma w KONTEKŚCIE, to tego NIE WIESZ.
-3. Jeśli pytanie dotyczy czegoś, czego NIE MA w KONTEKŚCIE (np. pracownicy, lokalizacja, godziny otwarcia, zabiegi niewymienione w kontekście), odpowiedz DOKŁADNIE: "Nie mam informacji na ten temat. Zapraszam do kontaktu telefonicznego pod numerem +48 123 456 789 lub na naszego Instagrama — chętnie odpowiemy na wszystkie pytania! 😊"
-4. Jeśli pytanie jest niezwiązane z salonem kosmetycznym lub nieodpowiednie, odpowiedz: "Jestem asystentką salonu Astra Beauty i mogę pomóc wyłącznie w kwestiach dotyczących naszych zabiegów i usług. 😊"
+1. JEDYNE ŹRÓDŁO PRAWDY to KONTEKST. Każda informacja (nazwa zabiegu, cena, czas, adres) MUSI pochodzić z KONTEKSTU.
+2. Pytania o problemy skórne (np. krosty, pryszcze, wągry, zmarszczki) SĄ związane z salonem. Traktuj potoczne słowa (np. "krosty", "pryszcze") jako synonimy pojęć z kontekstu (np. "trądzik", "zaskórniki").
+3. Jeśli na problem klienta w kontekście jest zabieg (np. na trądzik), zaproponuj go, nawet jeśli klient użył innego słowa.
+4. NIGDY nie dopowiadaj usług czy zabiegów, których nie ma w KONTEKŚCIE.
+5. Jeśli pytanie dotyczy usług/faktów niezwiązanych z salonem kosmetycznym (np. polityka, gotowanie), odpowiedz: "Jestem asystentką salonu Astra Beauty i mogę pomóc wyłącznie w kwestiach dotyczących naszych zabiegów i usług. 😊"
+6. Jeśli klient pyta o coś związanego z salonem, ale nie ma tego w KONTEKŚCIE, odpowiedz DOKŁADNIE: "Nie mam informacji na ten temat. Zapraszam do kontaktu telefonicznego pod numerem +48 123 456 789 lub na naszego Instagrama — chętnie odpowiemy na wszystkie pytania! 😊"
 
 ZASADY FORMATOWANIA:
 - Domyślnie wymieniaj zabiegi ZWIĘŹLE: tylko **nazwa**, cena i czas trwania. NIE dodawaj opisów zabiegów, chyba że klient wyraźnie pyta o szczegóły konkretnego zabiegu.
