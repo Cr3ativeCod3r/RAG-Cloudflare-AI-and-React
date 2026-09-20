@@ -1,5 +1,7 @@
 # Astra Beauty - AI Assistant (PoC)
 
+https://astra-beauty.pages.dev
+
 <img width="1466" height="740" alt="Image" src="https://github.com/user-attachments/assets/def985c8-129b-4fa5-ac9e-526a1f50b23d" />
 
 A Proof of Concept (PoC) for an intelligent, interactive 3D virtual assistant designed for a beauty salon. The assistant answers customer questions regarding treatments, prices, and availability using a custom knowledge base.
