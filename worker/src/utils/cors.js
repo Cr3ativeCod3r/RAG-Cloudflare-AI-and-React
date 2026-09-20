@@ -1,18 +1,10 @@
 // src/utils/cors.js
 
-// Allowed origins for CORS - only your production domain and local dev
 const ALLOWED_ORIGINS = [
   "https://astra-beauty.pages.dev",
-  "http://localhost:4321",
-  "http://localhost:3000",
 ];
 
-/**
- * Returns CORS headers with origin validation.
- * Only whitelisted origins receive the Access-Control-Allow-Origin header.
- */
 export function getCorsHeaders(request, env) {
-  // Allow overriding via env variable (comma-separated list)
   const origins = env?.ALLOWED_ORIGINS
     ? env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
     : ALLOWED_ORIGINS;
@@ -24,7 +16,12 @@ export function getCorsHeaders(request, env) {
     "Access-Control-Allow-Headers": "Content-Type",
   };
 
-  if (origins.includes(origin)) {
+  // Allow production origins, or any localhost/127.0.0.1 for local development
+  if (
+    origins.includes(origin) || 
+    origin.startsWith("http://localhost:") || 
+    origin.startsWith("http://127.0.0.1:")
+  ) {
     headers["Access-Control-Allow-Origin"] = origin;
   }
 
